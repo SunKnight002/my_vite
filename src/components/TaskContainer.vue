@@ -46,7 +46,7 @@
 </article>
 </template>
 
-<!-- <script>
+<script>
     import TaskItem from "./TaskItem.vue";
 
   
@@ -170,8 +170,11 @@
             }
         }
     }
-</script> -->
+</script>
 
+
+
+<!-- 
 <script setup>
   import {ref,onBeforeMount} from 'vue'
   import TaskItem from "./TaskItem.vue";
@@ -287,7 +290,7 @@
     }
   }
 
-</script>
+</script> -->
 
 <style lang="scss" scoped>
 article.task_container {

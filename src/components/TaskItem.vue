@@ -28,17 +28,17 @@
         </li>
 </template>
 
-<!-- <script>
+<script>
     export default {
         props:["tasks"],
         emits:["taskEdit","taskStar","taskSwap","taskRemove"]
     }
-</script> -->
-
+</script>
+<!-- 
 <script setup>
   defineProps(["tasks"]);
   defineEmits(["taskEdit","taskStar","taskSwap","taskRemove"]);
-</script>
+</script> -->
 
 
 <style lang="scss" scoped>
