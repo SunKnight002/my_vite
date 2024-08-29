@@ -46,7 +46,7 @@
 </article>
 </template>
 
-<script>
+<!-- <script>
     import TaskItem from "./TaskItem.vue";
 
   
@@ -170,127 +170,100 @@
             }
         }
     }
-</script>
+</script> -->
 
 
 
-<!-- 
 <script setup>
-  import {ref,onBeforeMount} from 'vue'
-  import TaskItem from "./TaskItem.vue";
+  import { ref, onBeforeMount } from "vue";
+  import TaskItem from "@/components/TaskItem.vue";
 
-  const taskText=ref("");
-  const tasks = ref([]);
+  // data
+  const taskText = ref(""); // {value: ""}
+  const tasks = ref([]);    // {value: []}
 
   // refs
-  const taskAddBlock = ref(null);
-  const taskList = ref(null);
+  const taskAddBlock = ref(null); // {value: 元素}
+  const taskList = ref(null);     // {value: 元素}
 
-  // 生命循環
-  onBeforeMount(()=>{
+  onBeforeMount(() => {
     let all_tasks = JSON.parse(localStorage.getItem("tasks"));
-    // console.log("tasks");
     if(all_tasks){
-        this.tasks = tasks;
+      tasks.value = all_tasks;
     }
   });
 
-  // methods:
-
-  function   toggleShadow(){
-    // console.log("aaaaa");
-    this.$refs.taskAddBlock.classList.toggle("-on");
+  function toggleShadow(){
+    taskAddBlock.value.classList.toggle("-on");
   }
 
   function taskAdd(){
-    if(taskText.value !=""){
-      // alert("你正在輸入，繼續");
-      tasks.value.unshift(
-          {
-              id:Date.now(),
-              name:taskText.value,
-              star:0,
-              editable:false
-          }
-      );
-      taskText.value ="";
-
-      localStorage.setItem("tasks",JSON.stringify(this.tasks));
-      }
+    if(taskText.value != ""){
+      tasks.value.unshift({
+        id: Date.now(),
+        name: taskText.value,
+        star: 0,
+        editable: false
+      });
+      taskText.value = "";
+      localStorage.setItem("tasks", JSON.stringify(tasks.value));
+    }
   }
 
-    function taskClear(){
-      // alert("xd");
-      let r = confirm("你確認要清空嗎?")
-      if(r){
-          // console.log(this.$refs.taskList);
-          for(let i = 0 ; i < taskList.value.children.length ;i++)
-          taskList.value.children[i].classList.add('fade_out');
+  function taskClear(){
+    let r = confirm("確認清空？");
+    if(r){
+      for(let i = 0; i < taskList.value.children.length; i++){
+        taskList.value.children[i].classList.add("fade_out");
       }
-
-      setTimeout(()=>{
-          console.log(this);
-          tasks.value =[];
-          localStorage.clear();
-          // 上面是全部刪除
-
-          // 下面是針對key去刪除
-          // localStorage.removeItem("tasks");
-      },1000)
+      setTimeout(() => {
+        tasks.value = [];
+        localStorage.clear();
+      }, 1000);
+    }
   }
 
-  function taskEdit(e,i){
-    // console.log(e);
-    // console.log(i);
-    if(tasks[i].value.editable){
-        if(tasks[i.value].name ==""){
-            alert("請輸入資料");
-        }else{
-            tasks[i].value.editable = !this.tasks[i].editable ;
-            localStorage.setItem("tasks",JSON.stringify(tasks.value));
-          
-        }
+  function taskEdit(e, i){
+    if(tasks.value[i].editable){
+      if(tasks.value[i].name == ""){
+        alert("請輸入資料");
+      }else{
+        tasks.value[i].editable = !tasks.value[i].editable;
+        localStorage.setItem("tasks", JSON.stringify(tasks.value));
+      }
     }else{
-        tasks[i].value.editable = !tasks[i].value.editable ;
+      tasks.value[i].editable = !tasks.value[i].editable;
     }
   }
 
-  function taskStar(e,i,star){
-    // alert(star);
-    tasks[i].value.star = star;
-    localStorage.setItem("tasks",JSON.stringify(tasks.value));
+  function taskStar(e, i, star){
+    tasks.value[i].star = star;
+    localStorage.setItem("tasks", JSON.stringify(tasks.value));
   }
 
-  function taskSwap(e,i,direction){
-        // alert(i);
-    // alert(direction)
-    if(direction == 'up' && i !=0){
-      // alert('up');
-      [tasks.value[i-1],tasks.value[i]] = [tasks.value[i],tasks.value[i-1]];
-      localStorage.setItem("tasks",JSON.stringify(this.tasks));
+  function taskSwap(e, i, direction){
+    if(direction == "up" && i != 0){
+      [tasks.value[i-1], tasks.value[i]] = [tasks.value[i], tasks.value[i-1]];
+      localStorage.setItem("tasks", JSON.stringify(tasks.value));
     }
-
-    if(direction == 'down' && i!= tasks.value.length-1){
-      // alert("down");
-      [tasks.value[i],tasks.value[i+1]] = [tasks.value[i+1],tasks.value[i]];
-      localStorage.setItem("tasks",JSON.stringify(tasks.value));
+    if(direction == "down" && i != tasks.value.length - 1){
+      [tasks.value[i], tasks.value[i+1]] = [tasks.value[i+1], tasks.value[i]];
+      localStorage.setItem("tasks", JSON.stringify(tasks.value));
     }
   }
 
-  function taskRemove(e,i){
-    // console.log(e);
-    // console.log(i);
-    let r = confirm("你確認要移除嗎?");
+  function taskRemove(e, i){
+    let r = confirm("確認移除？");
     if(r){
       e.target.closest("li").classList.add("fade_out");
-      setTimeout(() =>{
-        tasks.value.splice(i,1);
-        localStorage.setItem("tasks",JSON.stringify(tasks.value));
-      },1000);
+      setTimeout(() => {
+        tasks.value.splice(i, 1);
+        localStorage.setItem("tasks", JSON.stringify(tasks.value));
+      }, 1000);
     }
+    
   }
-
-</script> -->
+</script>
 
 <style lang="scss" scoped>
 article.task_container {
